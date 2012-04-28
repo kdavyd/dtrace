@@ -3,7 +3,8 @@
 #pragma D option quiet
 #pragma D option dynvarsize=40m
 
-/* Copyright Kirill Davydychev, Nexenta Systems, 2012 */
+/* Author: Kirill.Davydychev@Nexenta.com */
+/* Copyright 2012, Nexenta Systems, Inc. All rights reserved. */
 
 dtrace:::BEGIN
 {
