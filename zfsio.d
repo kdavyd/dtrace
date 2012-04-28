@@ -1,6 +1,8 @@
 #!/usr/sbin/dtrace -s
 #pragma D option quiet
 
+/* Copyright Kirill Davydychev, Nexenta Systems, 2012 */
+
 dmu_buf_hold_array_by_dnode:entry
 /args[0]->dn_objset->os_dsl_dataset && args[3]/ /* Reads */
 {
