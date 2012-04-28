@@ -3,6 +3,8 @@
 #pragma D option quiet
 #pragma D option dynvarsize=40m
 
+/* Copyright Kirill Davydychev, Nexenta Systems, 2012 */
+
 dtrace:::BEGIN
 {
         trace("Tracing physical I/O latency... Ctrl-C to end.");
