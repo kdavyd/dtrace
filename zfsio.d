@@ -42,5 +42,5 @@ tick-1sec
         trunc(@ior); trunc(@tpr); trunc(@iow); trunc(@tpw); trunc(@bsr); trunc(@bsw);
      /* clear(@ior); clear(@tpr); clear(@iow); clear(@tpw); clear(@bsr); clear(@bsw);*/
      /* TODO: Make script more interactive. Above, uncomment clear() and comment trunc() line in order to change
-        truncate behavior */
+        truncate behavior, or comment out both lines to get cumulative stats. */
 }
