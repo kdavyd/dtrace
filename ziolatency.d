@@ -3,6 +3,7 @@
 #pragma D option quiet
 #pragma D option dynvarsize=40m
 
+/* Description: Trace I/O latency on a per-vdev basis. Script will not be maintained for the foreseeable future. */
 /* Author: Kirill.Davydychev@Nexenta.com */
 /* Copyright 2012, Nexenta Systems, Inc. All rights reserved. */
 
