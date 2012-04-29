@@ -31,4 +31,7 @@ tick-1sec
         printf("                                         ------ ------ ---------- ----------\n");
         printa("%-40s %@-6d %@-6d %@-10d %@-10d\n",@ior,@iow,@tpr,@tpw);
         trunc(@ior); trunc(@tpr); trunc(@iow); trunc(@tpw);
+     /* clear(@ior); clear(@tpr); clear(@iow); clear(@tpw); */
+     /* TODO: Make script more interactive. Above, uncomment clear() and comment trunc() line in order to change
+        truncate behavior */
 }
