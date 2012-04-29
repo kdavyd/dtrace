@@ -16,7 +16,7 @@ dmu_buf_hold_array_by_dnode:entry
 {
         this->ds = stringof(args[0]->dn_objset->os_dsl_dataset->ds_dir->dd_myname);
         this->parent = stringof(args[0]->dn_objset->os_dsl_dataset->ds_dir->dd_parent->dd_myname);
-        this->path = strjoin(strjoin(this->parent,"/"),this->ds);
+        this->path = strjoin(strjoin(this->parent,"/"),this->ds); /* Dirty hack - parent/this format doesn't guarantee full path */
         @ior[this->path] = count();
         @tpr[this->path] = sum(args[2]);
         @bsr[this->path] = avg(args[2]);
