@@ -9,7 +9,7 @@
  * are indeed correct. */
 /* Author: Kirill.Davydychev@Nexenta.com */
 /* Copyright 2012, Nexenta Systems, Inc. All rights reserved. */
-/* Version: 0.2b */
+/* Version: 0.3b */
 
 dmu_buf_hold_array_by_dnode:entry
 /args[0]->dn_objset->os_dsl_dataset && args[3]/ /* Reads */
@@ -20,6 +20,7 @@ dmu_buf_hold_array_by_dnode:entry
         @ior[this->path] = count();
         @tpr[this->path] = sum(args[2]);
         @bsr[this->path] = avg(args[2]);
+        @distr[strjoin(this->path, " Reads")] = quantize(args[2]);
 }
 
 dmu_buf_hold_array_by_dnode:entry
@@ -31,6 +32,7 @@ dmu_buf_hold_array_by_dnode:entry
         @iow[this->path] = count();
         @tpw[this->path] = sum(args[2]);
         @bsw[this->path] = avg(args[2]);
+        @distw[strjoin(this->path, " Writes")] = quantize(args[2]);
 }
 
 tick-1sec
