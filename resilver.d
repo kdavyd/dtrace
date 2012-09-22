@@ -8,7 +8,7 @@
  * on the drives that we're resilvering *from*, in order to reflect read
  * inflation for raidzN vdevs, where in order to reconstruct a block we have
  * to read from all other devices in the same vdev.
- * /
+ */
 /* Author: Kirill.Davydychev@Nexenta.com */
 /* Copyright 2012, Nexenta Systems, Inc. All rights reserved. */
 /* Version: 0.1b */
