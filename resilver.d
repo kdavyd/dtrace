@@ -16,7 +16,7 @@
 dtrace:::BEGIN
 {
         printf("Tracing with 10 second interval...\n");
-        printf("If there is no resilver happening, no data will appear. \n");
+        printf("If there is no resilver happening, only timestamps will appear. \n");
 }
 
 zio_read:entry
@@ -63,6 +63,7 @@ tick-10sec
         normalize(@tp, 10*1024);
         normalize(@bs, 10);
         normalize(@ops, 10);
+        printf("\n%Y", walltimestamp);
         printa("\n\nResilver IOPs: %@d ",@ops);
         printa("\nResilver Blocksize: %@a",@bs);
         printa("\nResilver Throughput: %@d KB/sec",@tp);
