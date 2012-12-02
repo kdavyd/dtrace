@@ -3,10 +3,8 @@
 
 /* Description: This script will show read/write IOPs and throughput for ZFS
  * filesystems and zvols on a per-dataset basis. It can be used to estimate
- * which dataset is causing the most I/O load on the current system. It hasn't
- * yet been tested in production environments or used for precise purposes; 
- * should only be used for comparative analysis until verified that the numbers
- * are indeed correct. */
+ * which dataset is causing the most I/O load on the current system. It should 
+ * only be used for comparative analysis. */
 /* Author: Kirill.Davydychev@Nexenta.com */
 /* Copyright 2012, Nexenta Systems, Inc. All rights reserved. */
 /* Version: 0.3b */
