@@ -11,14 +11,16 @@
 
 svc_xprt_qput:entry
 {
-        @=max(args[0]->p_reqs);
-        @act_threads = max(args[0]->p_threads - args[0]->p_asleep);
-        @pool_pct_util = max(100*(args[0]->p_threads - args[0]->p_asleep)/args[0]->p_maxthreads);
+        @pending_reqs  = max(args[0]->p_reqs);
+        @act_threads   = max(args[0]->p_threads - args[0]->p_asleep);
+        @pool_pct_util = max(100 * (args[0]->p_threads - args[0]->p_asleep) / args[0]->p_maxthreads);
 }
 
 tick-5sec
 {
-        printf("%Y",walltimestamp);
-        printa(" Max Pending NFS requests: %@d; Max Active threads: %@d; Thread pool utilized percentage: %@d\n",@,@act_threads,@pool_pct_util);
-        trunc(@); trunc(@act_threads); trunc(@pool_pct_util);
+        printf("%Y", walltimestamp);
+        printa(" Max Pending NFS requests: %@d; Max Active threads: %@d; Thread pool utilized percentage: %@d\n", @pending_reqs, @act_threads, @pool_pct_util);
+        trunc(@pending_reqs); 
+        trunc(@act_threads); 
+        trunc(@pool_pct_util);
 }
