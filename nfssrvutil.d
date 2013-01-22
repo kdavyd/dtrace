@@ -16,7 +16,7 @@ svc_xprt_qput:entry
         @pool_pct_util = max(100*(args[0]->p_threads - args[0]->p_asleep)/args[0]->p_maxthreads);
 }
 
-tick-1sec
+tick-5sec
 {
         printf("%Y",walltimestamp);
         printa(" Max Pending NFS requests: %@d; Max Active threads: %@d; Thread pool utilized percentage: %@d\n",@,@act_threads,@pool_pct_util);
