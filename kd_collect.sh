@@ -11,16 +11,16 @@
 un="/usr/bin/uname"
 nmc_cmd=$(which nmc)
 if [[ ! $(${un} -v) =~ NexentaOS ]]; then
-        printf "%s\n" "[CRITICAL] System is not a NexentaStor Appliance."
+        printf "%s\n" "System is not a NexentaStor Appliance. Exiting."
         exit 1
 elif [ ! -x "${nmc_cmd}" ]; then
-        printf "%s\n" "[CRITICAL] NMC is not found." \
+        printf "%s\n" "NMC is not found. Exiting." \
         "This script may not be apporpriate for this system."
         exit 1
 fi
 
 #
-# Setup the performance logs filesystem
+# Setup the performance logs filesystem, it's fine if we fail - that just means we already have this.
 #
 
 zfs create syspool/perflogs
@@ -56,3 +56,7 @@ sleep 5
 
 echo "The logging is now set up. It will run indefinitely until the system is rebooted."
 echo "Please collect logs from the /perflogs/ folder in the root of the appliance."
+
+#
+# Todo: Error-proof the process, add an exit timer to each trace.
+#
