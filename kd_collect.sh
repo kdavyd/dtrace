@@ -1,8 +1,19 @@
 #!/usr/bin/bash
+#
+# Author: Kirill.Davydychev@Nexenta.com
+# Copyright 2013, Nexenta Systems, Inc. 
+#
+
+un="/usr/bin/uname"
+
+if [[ ! $(${un} -v) =~ NexentaOS ]]; then
+  printf "%s\n" "[CRITICAL] System is not a NexentaStor Appliance."
+	exit 1
 
 zfs create syspool/perflogs
 zfs set compression=gzip-9 syspool/perflogs
 zfs set mountpoint=/perflogs syspool/perflogs
+
 cd /perflogs
 wget https://raw.github.com/kdavyd/dtrace/master/nfsutil.d --no-ch
 wget https://raw.github.com/kdavyd/dtrace/master/txg_monitor.v3.d --no-ch
