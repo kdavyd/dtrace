@@ -28,3 +28,4 @@ nmc -c "show performance arc" >> arcstat.out &
 while true; do date >> arc.out; echo ::arc | mdb -k >> arc.out; sleep 60; done &
 echo "The logging is now set up. It will run indefinitely until the system is rebooted."
 echo "Please collect logs from the /perflogs/ folder in the root of the appliance."
+exit 0
