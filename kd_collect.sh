@@ -9,7 +9,9 @@ wget https://raw.github.com/kdavyd/dtrace/master/txg_monitor.v3.d --no-ch
 wget https://raw.github.com/kdavyd/dtrace/master/kmem_reap_100ms.d --no-ch
 chmod +x *.d
 ./nfsutil.d >> nfsutil.out &
-for i in `zpool list -H -o name`; do ./txg_monitor.v3.d $i >> txg.$i.out &; done
+for i in `zpool list -H -o name`; do
+  ./txg_monitor.v3.d $i >> txg.$i.out &
+done
 ./kmem_reap_100ms.d >> kmem.out &
 nmc -c "show performance arc" >> arcstat.out &
 while true; do date >> arc.out; echo ::arc | mdb -k >> arc.out; sleep 60; done &
