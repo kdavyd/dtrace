@@ -1,0 +1,8 @@
+Notes for non-trivial things I had to dig for to find.
+
+1. To print a global symbol value in a DTrace script, put a ` in front of it.
+
+  For instance,
+
+  dtrace -qn 'dnlc_lookup:return{@[(arg1)?"hit":"miss"]=count();} tick-1sec{printf("%Y",walltimestamp);printa(@);printf("DNLC entries: %d\n",`dnlc_nentries);trunc(@);}'
+
