@@ -4,5 +4,5 @@ Notes for non-trivial things I had to dig for to find.
 
   For instance,
 
-  dtrace -qn 'dnlc_lookup:return{@[(arg1)?"hit":"miss"]=count();} tick-1sec{printf("%Y",walltimestamp);printa(@);printf("DNLC entries: %d\n",`dnlc_nentries);trunc(@);}'
+  dtrace -qn 'dnlc_lookup:return{@[(arg1)?"Hit":"Miss"]=count()} tick-10sec{printf("%Y ",walltimestamp);printa("%s: %@d ",@);printf("DNLC entries: %d\n",`dnlc_nentries);trunc(@)}'
 
