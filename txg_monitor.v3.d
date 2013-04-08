@@ -1,6 +1,58 @@
 #!/usr/sbin/dtrace -s
 #pragma D option quiet
 
+/* Description: This script measures the ZFS transaction group commit time, and tracks
+ * several variables that affect it for each individual zpool. One of the key things it
+ * also looks at is the amount of throttling and delaying that happens in each individual
+ * spa_sync().
+ * Some important concepts:
+ * 1. Delaying (dly) means injecting a one-tick delay into the TXG coalescing 
+ *    process,  effectively slowing down the rate at which the transaction group 
+ *    fills. Throttling (thr), on the other hand means closing this TXG entirely, sending 
+ *    it off to quiesce and then  flush to disk, and pushing all new incoming data 
+ *    into the next TXG that is now "filling".
+ * 2. The feedback loop which determines when to stop filling the current TXG and
+ *    start a new one depends on a few kernel variables. The cutoff trigger (size)
+ *    is calculated from dp_tempreserved and dp_space_towrite, which this script 
+ *    combines into a value of reserved_max (res_max), duplicating the calculation
+ *    that happens in the kernel. When res_max reaches 7/8 of current dp_write_limit,
+ *    system starts delaying writes. When res_max reaches current dp_write_limit, 
+ *    system attempts a throttle, which has higher impact on performance. It is not
+ *    normal for a system to be constantly throttling/delaying, but if this happens
+ *    from time to time it's okay - the feedback loop likely set dp_write_limit too
+ *    low because there was no need for it to be high, and when write pattern changes,
+ *    the adjustment happens due to dp_throughput rising.
+ * 3. dp_write_limit is calculated as dp_throughput (dp_thr) multiplied by 
+ *    zfs_txg_synctime_ms, with certain thresholds applied if necessary. NOTE: It
+ *    accounts for write inflation, so it does not actually represent the amount of
+ *    data that goes into any given TXG. The output of this script shows a spread of
+ *    minimum and maximum of dp_write_limit recorded during each TXG, as well as the
+ *    maximum of the reserve, and the current dp_throughput, which is calculated at
+ *    the end of each TXG commit.
+ * 4. Some comments on other output values:
+ *    The X ms value at the beginning of each line is the length of the spa_sync() call
+ *        in milliseconds. As a general rule, we should strive for it to be less than
+ *        zfs_txg_synctime_ms, but that is not the only condition. When this number is
+ *        pathologically high, this might indicate either a hardware issue or a code
+ *        bottleneck; an example of such code bottleneck might be a metaslab allocator
+ *        issue when pool space utilization reaches 75%-80% (sometimes even earlier),
+ *        also known as free space fragmentation issue. Other causes of slowdowns may
+ *        include checksumming bottleneck on a system with dedup enabled, ongoing ZFS
+ *        operations such as a ZFS destroy, or an ongoing scrub/resilver, which by design
+ *        will borrow time from each TXG commit to do its business.
+ *    wMB and rMB is the amount of data written and read in MB's during the spa_sync()
+ *        call. They are the total data written by the system, not just for the specific
+ *        zpool.
+ *    wIops and rIops are the I/O operations that happened during spa_sync(), also global
+ *        unfortunately. They are already adjusted per second.
+ *    dly+thr are the delays and throttles. Those, normally 0+0, are for the individual
+ *        zpool.
+ *    dp_wrl, res_max and dp_thr are covered above. Also for the individual pool. */
+
+/* Author: Kirill.Davydychev@Nexenta.com */
+/* Copyright 2013, Nexenta Systems, Inc. All rights reserved. */
+/* Version: 3.0 */
+
 inline int MIN_MS = 1;
 
 dtrace:::BEGIN
