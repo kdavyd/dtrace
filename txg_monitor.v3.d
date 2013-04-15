@@ -113,7 +113,7 @@ fbt::spa_sync:return
         normalize(@wrl_min, 1048576);
         normalize(@wrl_max, 1048576);
         normalize(@reserved_max, 1048576);
-        normalize(@dp_thr_max, 1024); /* dp_throughput is in bytes/millisec, we are converting to Mbytes/sec */
+        normalize(@dp_thr_max, 1049); /* dp_throughput is in bytes/millisec, we are converting to Mbytes/sec */
 	normalize(@writeio,this->ms);
 	normalize(@readio,this->ms);
         printf("%-20Y %-10s %6d ms, ", walltimestamp,
