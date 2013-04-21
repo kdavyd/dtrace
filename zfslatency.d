@@ -6,59 +6,54 @@
 
 dtrace:::BEGIN
 {
-
+        rx = 0; wx = 0;
 }
 
 /* see uts/common/fs/zfs/zfs_vnops.c */
 
 fbt::zfs_read:entry,
-fbt::zfs_write:entry
+fbt::zfs_write:entry,
+fbt::zfs_fsync:entry
 {
 	self->path = args[0]->v_path;
-	self->bytes = args[1]->uio_resid;
+        self->bytes = ((uio_t *)arg1)->uio_resid;
 	self->start = timestamp;
+        self->id = self->start+self->bytes;
 }
 
 fbt::zfs_read:return
-/ this->iotime = (timestamp - self->start) /
-{
-        this->latency_ms =  this->iotime / 1000;
-/*        printf("read  %5d  %5d\n", self->bytes, this->latency_ms); */
-/*      @plots[args[1]->dev_statname, args[0]->b_bcount] = quantize(this->delta); */
-        /* Figure out average byte size*/
-        /* this->size = args[0]->b_bcount; */
-        @bsize["read_b"] = avg(self->bytes);
-        @avg_latency["read_lat"] = avg(this->latency_ms); 
-}
+/ self->bytes != NULL && self->start+self->bytes == self->id /
 
+{
+        this->latency = (timestamp - self->start) / 1000;
+        this->ops = "read";
+        @bytes["bytes"] = sum(self->bytes);
+        @latency["Dist (bytes/us):", this->ops] = quantize(self->bytes/this->latency);
+}
 
 fbt::zfs_write:return
-/ this->iotime = (timestamp - self->start) /
+/ self->bytes != NULL && self->start+self->bytes == self->id /
+
 {
-        this->latency_ms =  this->iotime / 1000;
-/*        printf("write  %5d  %5d\n", self->bytes, this->latency_ms); */
-/*      @plots[args[1]->dev_statname, args[0]->b_bcount] = quantize(this->delta); */
-        /* Figure out average byte size*/
-        /* this->size = args[0]->b_bcount; */
-        @bsize["write_b"] = avg(self->bytes);
-        @avg_latency["write_lat"] = avg(this->latency_ms);
+        this->latency = (timestamp - self->start) / 1000;
+        this->ops = "write";
+        @latency["Dist (bytes/us):", this->ops] = quantize(self->bytes/this->latency);
 }
 
-tick-1sec
-/this->latency_ms > 0/
-{
-		printf("%u ",walltimestamp/1000000000);
-	    printa("%s %@d ", @avg_latency);
-	    printa("\t%s %@d ", @bsize);
-	    printf("%s\n", "");
-		self->path = 0; self->bytes = 0; self->start = 0;
-		clear(@avg_latency); clear(@bsize);
-}
-
-
-/* fbt::zfs_read:return,
+fbt::zfs_read:return,
 fbt::zfs_write:return
+/ self->bytes != NULL && self->start+self->bytes == self->id /
+
 {
-	self->path = 0; self->bytes = 0; self->start = 0;
-	clear(@avg_latency); clear(@bsize);
-} */
+        self->start = 0;
+        self->bytes = 0;
+        self->id = 0;
+}
+
+tick-30sec
+{
+	printa("%18s %s %@d\n", @latency);
+        printa(@bytes);
+	trunc(@latency);
+        trunc(@bytes);
+}

@@ -46,7 +46,7 @@
  
 BEGIN
 {
-        printf ("%20s%20s%8s%10s%10s\n", "DATE", "CMD", "R/W/D", "USER", "PID");
+        printf ("%20s%20s%8s%20s%10s%10s\n", "DATE", "CMD", "R/W/D", "PATH", "USER", "PID");
 }
  
 zfs_read:entry,
@@ -65,8 +65,9 @@ zfs_write:return,
 zfs_putpage:return
 / strstr(stringof(self->filepath), $1) != NULL /
 {
-       printf("%20Y%20s%8s%10d%10d\n",
-                walltimestamp, execname, "W", uid, pid);
+
+       printf("%20Y%20s%8s%    20s%10d%10d\n",
+                walltimestamp, execname, "W", stringof(self->filepath), uid, pid);
        self->filepath = 0;
 }
  
@@ -74,8 +75,8 @@ zfs_read:return,
 zfs_getpage:return
 / strstr(stringof(self->filepath), $1) != NULL /
 {
-       printf("%20Y%20s%8s%10d%10d\n",
-                walltimestamp, execname, "R", uid, pid);
+       printf("%20Y%20s%8s%    20s%10d%10d\n",
+                walltimestamp, execname, "R", stringof(self->filepath), uid, pid);
        self->filepath = 0;
 }
  
@@ -88,6 +89,6 @@ zfs_remove:entry
 zfs_remove:return
 / strstr(stringof(self->filepath), $1) != NULL /
 {
-        printf("%20Y%20s%8s%10d%10d\n",
-                walltimestamp, execname, "D", uid, pid);
+       printf("%20Y%20s%8s%    20s%10d%10d\n",
+                walltimestamp, execname, "D", stringof(self->filepath), uid, pid);
 }
