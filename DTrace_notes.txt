@@ -1,0 +1,14 @@
+Notes for non-trivial things I had to dig for to find.
+
+1. To print a global symbol value in a DTrace script, put a ` in front of it.
+
+  For instance,
+
+  dtrace -qn 'dnlc_lookup:return{@[(arg1)?"Hit":"Miss"]=count()} tick-10sec{printf("%Y ",walltimestamp);printa("%s: %@d ",@);printf("DNLC entries: %d\n",`dnlc_nentries);trunc(@)}'
+
+One-liners
+
+Detect zeroed blocks being written to disk (such as sdelete or dd if=/dev/zero from the client):
+
+dtrace -qn 'zio_compress_data:return/args[1]==0/{@["zero blocks"]=count()} tick-1sec{printf("%Y",walltimestamp);printa(@);clear(@);}'
+
