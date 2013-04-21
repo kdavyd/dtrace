@@ -52,6 +52,8 @@
 /* Author: Kirill.Davydychev@Nexenta.com */
 /* Copyright 2013, Nexenta Systems, Inc. All rights reserved. */
 /* Version: 3.0 */
+/* To get the latest version of this script, 
+ * wget https://raw.github.com/kdavyd/dtrace/master/txg_monitor.v3.d --no-ch */
 
 inline int MIN_MS = 1;
 
