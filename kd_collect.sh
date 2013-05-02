@@ -35,7 +35,10 @@ cd /perflogs
 wget https://raw.github.com/kdavyd/dtrace/master/nfsutil.d --no-ch
 wget https://raw.github.com/kdavyd/dtrace/master/txg_monitor.v3.d --no-ch
 wget https://raw.github.com/kdavyd/dtrace/master/kmem_reap_100ms.d --no-ch
+wget https://raw.github.com/kdavyd/dtrace/master/zfsio.d --no-ch
+wget https://raw.github.com/kdavyd/arcstat/master/arcstat.pl --no-ch
 chmod +x *.d
+chmod +x arcstat.pl
 
 #
 # Start the traces
@@ -47,7 +50,8 @@ for i in `zpool list -H -o name`; do
   ./txg_monitor.v3.d $i >> txg.$i.out &
 done
 ./kmem_reap_100ms.d >> kmem.out &
-nmc -c "show performance arc" >> arcstat.out &
+./arcstat.pl -f read,hits,miss,hit%,l2read,l2hits,l2miss,l2hit%,arcsz,l2size >> arcstat.out &
+./zfsio.d >> zfsio.out &
 while true; do date >> arc.out; echo ::arc | mdb -k >> arc.out; sleep 60; done &
 sleep 5
 
