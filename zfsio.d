@@ -35,8 +35,7 @@ dmu_buf_hold_array_by_dnode:entry
 
 tick-1sec
 {
-        printf("%Y \n",walltimestamp);
-        printf("                                          operations       bandwidth           blocksize\n");
+        printf("%Y                      operations       bandwidth           blocksize\n",walltimestamp);
         printf("Dataset                                  read   write  read       write      read   write\n");
         printf("                                         ------ ------ ---------- ---------- ------ ------\n");
         printa("%-40s %@-6d %@-6d %@-10d %@-10d %@-6d %@-6d\n",@ior,@iow,@tpr,@tpw,@bsr,@bsw);
