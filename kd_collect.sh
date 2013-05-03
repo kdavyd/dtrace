@@ -52,6 +52,7 @@ done
 ./kmem_reap_100ms.d >> kmem.out &
 ./arcstat.pl -f date,read,hits,miss,hit%,l2read,l2hits,l2miss,l2hit%,arcsz,l2size 1 >> arcstat.out &
 ./zfsio.d >> zfsio.out &
+zpool iostat -Td 1 >> zpooliostat1.out &
 while true; do date >> arc.out; echo ::arc | mdb -k >> arc.out; sleep 60; done &
 sleep 5
 
