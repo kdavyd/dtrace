@@ -63,6 +63,3 @@ sleep 5
 echo "The logging is now set up. It will run indefinitely until the system is rebooted."
 echo "Please collect logs from the /perflogs/ folder in the root of the appliance."
 
-#
-# Todo: Error-proof the process, add an exit timer to each trace.
-#
