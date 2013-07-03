@@ -1,4 +1,5 @@
 #!/usr/sbin/dtrace -s
+#pragma D option destructive
 
 fbt::arc_kmem_reap_now:entry
 {
