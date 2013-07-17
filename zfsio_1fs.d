@@ -1,16 +1,14 @@
 #!/usr/sbin/dtrace -s
 #pragma D option quiet
 
-/* Description: This script will show read/write IOPs and throughput for ZFS
- * filesystems and zvols on a per-dataset basis. It can be used to estimate
- * which dataset is causing the most I/O load on the current system. It should 
- * only be used for comparative analysis. */
+/* Description: This script will show read/write IOPs and throughput for a single ZFS filesystem. 
+ * Usage: ./zfsio_1fs.d fsname */
 /* Author: Kirill.Davydychev@Nexenta.com */
-/* Copyright 2012, Nexenta Systems, Inc. All rights reserved. */
-/* Version: 0.4b */
+/* Copyright 2013, Nexenta Systems, Inc. All rights reserved. */
+/* Version: 0.5b */
 
 dmu_buf_hold_array_by_dnode:entry
-/args[0]->dn_objset->os_dsl_dataset && args[3] && stringof(args[0]->dn_objset->os_dsl_dataset->ds_dir->dd_myname) == "$$1"/ /* Reads */
+/args[0]->dn_objset->os_dsl_dataset && args[3] && stringof(args[0]->dn_objset->os_dsl_dataset->ds_dir->dd_myname) == $$1/ /* Reads */
 {
         this->ds = stringof(args[0]->dn_objset->os_dsl_dataset->ds_dir->dd_myname);
         this->parent = stringof(args[0]->dn_objset->os_dsl_dataset->ds_dir->dd_parent->dd_myname);
@@ -22,7 +20,7 @@ dmu_buf_hold_array_by_dnode:entry
 }
 
 dmu_buf_hold_array_by_dnode:entry
-/args[0]->dn_objset->os_dsl_dataset && !args[3] && stringof(args[0]->dn_objset->os_dsl_dataset->ds_dir->dd_myname) == "$$1"/ /* Writes */
+/args[0]->dn_objset->os_dsl_dataset && !args[3] && stringof(args[0]->dn_objset->os_dsl_dataset->ds_dir->dd_myname) == $$1/ /* Writes */
 {
         this->ds = stringof(args[0]->dn_objset->os_dsl_dataset->ds_dir->dd_myname);
         this->parent = stringof(args[0]->dn_objset->os_dsl_dataset->ds_dir->dd_parent->dd_myname);
