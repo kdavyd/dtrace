@@ -53,6 +53,9 @@ done
 ./arcstat.pl -f time,read,hits,miss,hit%,l2read,l2hits,l2miss,l2hit%,arcsz,l2size 1 >> arcstat.out &
 ./zfsio.d >> zfsio.out &
 zpool iostat -Td 1 >> zpooliostat1.out &
+vmstat -Td 1 >> vmstat.out &
+prstat -dd 1 >> prstat.out &
+mpstat -Td 1 >> mpstat.out &
 while true; do date >> arc.out; echo ::arc | mdb -k >> arc.out; sleep 60; done &
 sleep 5
 
