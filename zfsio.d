@@ -33,7 +33,7 @@ dmu_buf_hold_array_by_dnode:entry
         @distw[strjoin(this->path, " Writes")] = quantize(args[2]);
 }
 
-tick-1sec
+tick-1sec,END
 {
         printf("%Y                      operations       bandwidth           blocksize\n",walltimestamp);
         printf("Dataset                                  read   write  read       write      read   write\n");
