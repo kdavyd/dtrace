@@ -49,6 +49,14 @@ io:::start
         @writebytes = sum(args[0]->b_bcount);
 }
 
+io:::start
+/in_spa_sync && (args[0]->b_flags & 0x40)/
+{
+        @readio = sum(1);
+        @readbytes = sum(args[0]->b_bcount);
+}
+
+
 tick-1sec
 {
         normalize(@writebytes, 1048576);
