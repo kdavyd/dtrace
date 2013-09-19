@@ -56,6 +56,7 @@ zpool iostat -Td 1 >> zpooliostat1.out &
 vmstat -Td 1 >> vmstat.out &
 prstat -dd 1 >> prstat.out &
 mpstat -Td 1 >> mpstat.out &
+iostat -Td -xn 1 86400 >> iostat.out &
 while true; do date >> arc.out; echo ::arc | mdb -k >> arc.out; sleep 60; done &
 sleep 5
 
