@@ -4,7 +4,7 @@
 emlxs_reset:entry
 {
     @[stack(100)]=count();
-    printf("%Y: Reset entry command %d\n",arg0);
+    printf("%Y: Reset entry command %d\n",arg1);
 }
 
 emlxs_reset:return
