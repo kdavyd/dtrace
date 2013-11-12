@@ -1,4 +1,4 @@
-#!/usr/sbin/dtrace
+#!/usr/sbin/dtrace -s
 #pragma D option quiet
 
 emlxs_reset:entry
