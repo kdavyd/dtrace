@@ -12,3 +12,6 @@ Detect zeroed blocks being written to disk (such as sdelete or dd if=/dev/zero f
 
 dtrace -qn 'zio_compress_data:return/args[1]==0/{@["zero blocks"]=count()} tick-1sec{printf("%Y",walltimestamp);printa(@);clear(@);}'
 
+Find how much time a userland process spends on-cpu to determine how effective its threading model is (using rpcbind as example) - credit to Saso Kiselkov:
+
+dtrace -n 'BEGIN{total=0}sched:::on-cpu/pid=='$(pgrep rpcbind)'/{self->start=walltimestamp} sched:::off-cpu/pid=='$(pgrep rpcbind)'/{total += walltimestamp - self->start} tick-1s{printf("total: %lli.%09lli", (long long) total/1000000000, (long long) total % 1000000000); total=0}'
