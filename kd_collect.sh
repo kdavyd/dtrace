@@ -37,8 +37,10 @@ wget https://raw.github.com/kdavyd/dtrace/master/txg_monitor.v3.d --no-ch
 wget https://raw.github.com/kdavyd/dtrace/master/kmem_reap_100ms.d --no-ch
 wget https://raw.github.com/kdavyd/dtrace/master/zfsio.d --no-ch
 wget https://raw.github.com/kdavyd/arcstat/master/arcstat.pl --no-ch
+wget https://raw.githubusercontent.com/kdavyd/sparta/master/payload/hotkernel.priv --no-ch
 chmod +x *.d
 chmod +x arcstat.pl
+chmod +x hotkernel.priv
 
 #
 # Start the traces
@@ -59,6 +61,7 @@ mpstat -Td 1 >> mpstat.out &
 iostat -Td -xn 1 86400 >> iostat.out &
 echo ::taskq | mdb -k >> taskq.out
 while true; do date >> arc.out; echo ::arc | mdb -k >> arc.out; sleep 60; done &
+while true; do date >> hotkernel.out; ./hotkernel.priv >> hotkernel.out; sleep 570; done &
 sleep 5
 
 #
