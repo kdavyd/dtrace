@@ -8,7 +8,7 @@
 
 /* Author: Kirill.Davydychev@Nexenta.com */
 /* Copyright 2014, Nexenta Systems, Inc. All rights reserved. */
-/* Version: 0.1 */
+/* Version: 0.2 */
 /* To get the latest version of this script, 
  * wget https://raw.github.com/kdavyd/dtrace/master/ixgbe_debug.d --no-ch */
 
