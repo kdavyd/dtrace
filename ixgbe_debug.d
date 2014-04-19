@@ -18,6 +18,7 @@ dtrace:::BEGIN
 {
  /* Definitions from /usr/src/uts/common/io/ixgbe/ixgbe_type.h */
  /* Generated using awk '{print "ixgbe_err["$3"] = \"" $2"\";"}' */
+ 
  ixgbe_err[0] = "IXGBE_SUCCESS";
  ixgbe_err[-1] = "IXGBE_ERR_EEPROM";
  ixgbe_err[-2] = "IXGBE_ERR_EEPROM_CHECKSUM";
