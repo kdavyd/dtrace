@@ -55,7 +55,21 @@ dtrace:::BEGIN
  ixgbe_err[-34] = "IXGBE_ERR_OUT_OF_MEM";
 }
 
-ixgbe_identify_sfp_module_generic:return
+ixgbe_identify_sfp_module_generic:return,
+ixgbe_identify_phy_generic:return,
+ixgbe_reset_phy_generic:return,
+ixgbe_read_phy_reg_generic:return,
+ixgbe_write_phy_reg_generic:return,
+ixgbe_setup_phy_link_generic:return,
+ixgbe_get_copper_link_capabilities_generic:return,
+ixgbe_check_phy_link_tnx:return,
+ixgbe_setup_phy_link_tnx:return,
+ixgbe_get_phy_firmware_version_tnx:return,
+ixgbe_get_phy_firmware_version_generic:return,
+ixgbe_reset_phy_nl:return,
+ixgbe_identify_module_generic:return,
+ixgbe_get_sfp_init_sequence_offsets:return,
+ixgbe_tn_check_overtemp:return
 {
     printf("%s:%s\n",probefunc,ixgbe_err[arg1]);
 }
