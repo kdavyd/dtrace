@@ -55,7 +55,6 @@ dtrace:::BEGIN
 }
 
 ixgbe_identify_sfp_module_generic:return
-/arg1==-19/
 {
     printf("%s:%s\n",probefunc,ixgbe_err[arg1]);
 }
