@@ -77,5 +77,5 @@ ixgbe_tn_check_overtemp:return
 ixgbe_identify_phy_generic:return
 /arg1 == -17/
 {
-    trace("%s: This is normal, the code retries. Ignore and carry on.");
+    printf("%s: This is normal, the code retries. Ignore and carry on.\n",probefunc);
 }
