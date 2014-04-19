@@ -73,3 +73,9 @@ ixgbe_tn_check_overtemp:return
 {
     printf("%s:%s\n",probefunc,ixgbe_err[arg1]);
 }
+
+ixgbe_identify_phy_generic:return
+/arg1 == -17/
+{
+    trace("%s: This is normal, not sure why ADDR_INVALID is returned. Ignore and carry on.");
+}
