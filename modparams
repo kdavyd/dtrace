@@ -6,4 +6,9 @@
 
 # Copyright 2014 Kirill.Davydychev@nexenta.com
 
-echo "::nm -t objt -g -n -x -f val,ctype,name $1" | mdb -k | tr -s " " | tr '\n' ' ' | tr '|' ' ' | perl -pe 's/0x/\n0x/g' | egrep '(int|boolean|size|time)' | grep -v "*" | grep -v '\[' | awk '$2 == "uint64_t" {print $3"/E"} $2 == "int64_t" {print $3"/e"} $2 == "int" {print $3"/D"} $2 == "offset_t" || $2 == "ssize_t" || $2 == "hrtime_t" || $2 == "uint_t" || $2 == "uint32_t" || $2 == "boolean_t" {print $3"/U"} $2 == "uint8_t" {print $3"/V"}' | mdb -k | tr -s " "
+echo "::nm -t objt -g -n -x -f val,ctype,name $1" | mdb -k | tr -s " " | tr '\n' ' ' |\
+tr '|' ' ' | perl -pe 's/0x/\n0x/g' | egrep '(int|boolean|size|time)' | grep -v "*"  |\
+grep -v '\[' | awk '$2 == "uint64_t" {print $3"/E"} $2 == "int64_t" {print $3"/e"} $2 \
+== "int" {print $3"/D"} $2 == "offset_t" || $2 == "ssize_t" || $2 == "hrtime_t" || $2 \
+== "uint_t" || $2 == "uint32_t" || $2 == "boolean_t" {print $3"/U"} $2 == "uint8_t"   \
+{print $3"/V"}' | mdb -k | tr -s " "
