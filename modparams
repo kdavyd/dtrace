@@ -3,6 +3,7 @@
 # Description: Print all global symbols of relevant types in a kernel module
 # Usage: ./modparams <module>
 # Example: ./modparams zfs
+# If you run the script without any arguments, it'll grab all modules.
 
 # Copyright 2014 Kirill.Davydychev@nexenta.com, Paul.Nienaber@nexenta.com
 
