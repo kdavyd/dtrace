@@ -9,9 +9,16 @@
 
 mdb -k <<<"::nm -t objt -g -n -x -f ctype,name $1" | tail -n +1 \
   | perl -pe 's/\|\n/\|/' \
-  | perl -ne '%a=("uint64_t"=>"/E","int64_t"=>"/e","int"=>"/D","offset_t"=>"/U",
-                  "ssize_t"=>"/U","hrtime_t"=>"/U","uint_t"=>"/U","uint32_t"=>"/U",
-                  "boolean_t"=>"/U","uint8_t"=>"/V");
+  | perl -ne '%a=("uint64_t"=>"/E",
+                  "int64_t"=>"/e",
+                  "int"=>"/D",
+                  "offset_t"=>"/U",
+                  "ssize_t"=>"/U",
+                  "hrtime_t"=>"/U",
+                  "uint_t"=>"/U",
+                  "uint32_t"=>"/U",
+                  "boolean_t"=>"/U",
+                  "uint8_t"=>"/V");
                   chomp;s/ +\|/\|/;@b=split /\|/;
                   defined $a{$b[0]} && print "$b[1]$a{$b[0]}\n"' \
   | mdb -k | tr -s ' ' | egrep -v ':$'
