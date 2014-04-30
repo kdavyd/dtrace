@@ -7,7 +7,7 @@
 # Copyright 2014 Kirill.Davydychev@nexenta.com, Paul.Nienaber@nexenta.com
 
 
-mdb -k <<<'::nm -t objt -g -n -x -f ctype,name zfs' | tail -n +1 \
+mdb -k <<<'::nm -t objt -g -n -x -f ctype,name '"$1" | tail -n +1 \
   | perl -ne '%a=("uint64_t"=>"/E","int64_t"=>"/e","int"=>"/D","offset_t"=>"/U",
                   "ssize_t"=>"/U","hrtime_t"=>"/U","uint_t"=>"/U","uint32_t"=>"/U",
                   "boolean_t"=>"/U","uint8_t"=>"/V");
