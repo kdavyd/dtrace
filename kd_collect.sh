@@ -47,9 +47,10 @@ chmod +x hotkernel.priv
 #
 
 ./nfsutil.d >> nfsutil.out &
-for i in `zpool list -H -o name`; do
+mapfile -t zpools < <(zpool list -H -o name)
+for pool in "${zpools[@]}" ; do
   sleep 1
-  ./txg_monitor.v3.d $i >> txg.$i.out &
+  ./txg_monitor.v3.d "$pool" >> "txg.$pool.out" &
 done
 ./kmem_reap_100ms.d >> kmem.out &
 ./arcstat.pl -f time,read,hits,miss,hit%,l2read,l2hits,l2miss,l2hit%,arcsz,l2size 1 >> arcstat.out &
