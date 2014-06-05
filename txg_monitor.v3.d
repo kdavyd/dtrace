@@ -54,6 +54,11 @@
 /* Version: 3.0 */
 /* To get the latest version of this script, 
  * wget https://raw.github.com/kdavyd/dtrace/master/txg_monitor.v3.d --no-ch */
+ 
+/* This script only works on NexentaStor 3.x and other illumos-based distributions that
+ * do *not* have the illumos 3464 commit integrated. That commit completely refactors 
+ * the TXG subsystem, and will require a brand new script for similar functionality to
+ * be exposed */
 
 inline int MIN_MS = 1;
 
