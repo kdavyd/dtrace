@@ -5,6 +5,11 @@
 /* Copyright 2013, Nexenta Systems, Inc. All rights reserved. */
 /* Version: 1.0 */
 
+/* This script only works on NexentaStor 3.x and other illumos-based distributions that
+ * do *not* have the illumos 3464 commit integrated. That commit completely refactors 
+ * the TXG subsystem, and will require a brand new script for similar functionality to
+ * be exposed */
+
 inline int MIN_MS = 1;
 
 dtrace:::BEGIN
