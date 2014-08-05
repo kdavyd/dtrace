@@ -1,5 +1,5 @@
 > t <- read.csv("/Path/to/parsed.zfsio.csv", skip=1, sep=",")
-> t[,1] <- as.POSIXct(h3l01[,1],  format="%Y-%m-%d-%T")
+> t[,1] <- as.POSIXct(t[,1],  format="%Y-%m-%d-%T")
 
 The following will plot first 70k data points. Adjust range to narrow down time.
 
