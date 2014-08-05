@@ -38,6 +38,7 @@ wget https://raw.github.com/kdavyd/dtrace/master/kmem_reap_100ms.d --no-ch
 wget https://raw.github.com/kdavyd/dtrace/master/zfsio.d --no-ch
 wget https://raw.github.com/kdavyd/arcstat/master/arcstat.pl --no-ch
 wget https://raw.githubusercontent.com/kdavyd/sparta/master/payload/hotkernel.priv --no-ch
+wget https://raw.githubusercontent.com/kdavyd/dtrace/master/kmem_oversize.d --no-ch
 chmod +x *.d
 chmod +x arcstat.pl
 chmod +x hotkernel.priv
@@ -55,6 +56,7 @@ done
 ./kmem_reap_100ms.d >> kmem.out &
 ./arcstat.pl -f time,read,hits,miss,hit%,l2read,l2hits,l2miss,l2hit%,arcsz,l2size 1 >> arcstat.out &
 ./zfsio.d >> zfsio.out &
+./kmem_oversize.d >> kmem_oversize.out &
 zpool iostat -Td 1 >> zpooliostat1.out &
 vmstat -Td 1 >> vmstat.out &
 prstat -dd 1 >> prstat.out &
