@@ -12,4 +12,6 @@ tick-10sec
         printf("%Y\n",walltimestamp);
         printa(@);
         printa(@s);
+        trunc(@);
+        trunc(@s);
 }
