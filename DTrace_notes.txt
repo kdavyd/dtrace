@@ -19,3 +19,7 @@ dtrace -n 'BEGIN{total=0}sched:::on-cpu/pid=='$(pgrep rpcbind)'/{self->start=wal
 Detect whether ixgbe is tripping on an unsupported SFP:
 
 dtrace -n 'ixgbe_identify_sfp_module_generic:return/arg1==-19/{trace("IXGBE_ERR_SFP_NOT_SUPPORTED")}'
+
+Find out who is unmounting ZFS snapshots (stolen from https://www.illumos.org/issues/5273):
+
+dtrace -n 'fbt:zfs:zfsvfs_teardown:entry /strstr(stringof(((struct zfsvfs *)arg0)->z_vfs->vfs_mntpt->rs_string), "snapshot") != 0/ { printf("pid %d, execname %s, unmounting %d, %s, %Y", pid, execname != 0 ? execname : "NULL", arg1, stringof(((struct zfsvfs *)arg0)->z_vfs->vfs_mntpt->rs_string), walltimestamp ); stack(); ustack(); }'
