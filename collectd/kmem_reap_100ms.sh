@@ -76,9 +76,9 @@ kmem_depot_ws_reap:return
         /* printf("%Y %s %d ms %d mags %d slabs", walltimestamp, self->kct->cache_name, (self->ts_end[probefunc])/1000000, self->magcount, self->slabcount);
         */
 
-	printf("PUTVAL '$HOSTNAME'.arc_kmem/%s/reap_ms %d:%d",self->kct->cache_name, self->wts_sec, (self->ts_end[probefunc])/1000000);
-	printf("PUTVAL '$HOSTNAME'.arc_kmem/%s/reap_magazines %d:%d",self->kct->cache_name, self->wts_sec, self->magcount);
-	printf("PUTVAL '$HOSTNAME'.arc_kmem/%s/reap_slabs %d:%d",self->kct->cache_name, self->wts_sec, self->slabcount);
+	printf("PUTVAL '$HOSTNAME'.arc_kmem/%s/gauge-reap_ms interval=180 %d:%d\n",self->kct->cache_name, self->wts_sec, (self->ts_end[probefunc])/1000000);
+	printf("PUTVAL '$HOSTNAME'.arc_kmem/%s/gauge-reap_magazines interval=180 %d:%d\n",self->kct->cache_name, self->wts_sec, self->magcount);
+	printf("PUTVAL '$HOSTNAME'.arc_kmem/%s/gauge-reap_slabs interval=180 %d:%d\n",self->kct->cache_name, self->wts_sec, self->slabcount);
 	
 	self->start[probefunc] = NULL;
 
@@ -95,7 +95,8 @@ kmem_depot_ws_reap:return
 fbt::arc_kmem_reap_now:return
 /self->start[probefunc] && ((self->end[probefunc] = timestamp - self->start[probefunc]) > 100000000)/
 {
-        printf("PUTVAL '$HOSTNAME'.arc_kmem/arc_kmem_reap_now/reap_ms %d:%d", self->wts_sec,
+	self->wts_sec = walltimestamp / 1000000000;
+        printf("PUTVAL '$HOSTNAME'.arc_kmem/arc_kmem_reap_now/gauge-reap_ms interval=180 %d:%d\n", self->wts_sec,
                 (timestamp - self->start[probefunc]) / 1000000);
 	self->start[probefunc] = NULL;
         self->in_kmem = NULL;
