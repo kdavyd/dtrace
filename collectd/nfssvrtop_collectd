@@ -470,18 +470,18 @@ profile:::tick-1sec
 			"Rd_bw", "SWr_bw", "AWr_bw",
 			"Rd_t", "SWr_t", "AWr_t", "Com_t", "Align%");
 	
-	printa("PUTVAL '$HOSTNAME'.nfs/clients/nfsv%s/%s/nfsops %@d:%@d\n",@wts_sec, @c_nfsops);
-	printa("PUTVAL '$HOSTNAME'.nfs/clients/nfsv%s/%s/reads %@d:%@d\n",@wts_sec, @c_read_client);
-	printa("PUTVAL '$HOSTNAME'.nfs/clients/nfsv%s/%s/swrites %@d:%@d\n",@wts_sec, @c_swrite_client);
-	printa("PUTVAL '$HOSTNAME'.nfs/clients/nfsv%s/%s/awrites %@d:%@d\n",@wts_sec, @c_awrite_client);
-	printa("PUTVAL '$HOSTNAME'.nfs/clients/nfsv%s/%s/commits %@d:%@d\n",@wts_sec, @c_commit_client);
-	printa("PUTVAL '$HOSTNAME'.nfs/clients/nfsv%s/%s/read_bytes %@d:%@d\n",@wts_sec, @read_b);
-	printa("PUTVAL '$HOSTNAME'.nfs/clients/nfsv%s/%s/swrite_bytes %@d:%@d\n",@wts_sec, @swrite_b);
-	printa("PUTVAL '$HOSTNAME'.nfs/clients/nfsv%s/%s/awrite_bytes %@d:%@d\n",@wts_sec, @awrite_b);
-	printa("PUTVAL '$HOSTNAME'.nfs/clients/nfsv%s/%s/read_latency %@d:%@d\n",@wts_sec, @avgtime_read);
-	printa("PUTVAL '$HOSTNAME'.nfs/clients/nfsv%s/%s/swrite_latency %@d:%@d\n",@wts_sec, @avgtime_swrite);
-	printa("PUTVAL '$HOSTNAME'.nfs/clients/nfsv%s/%s/awrite_latency %@d:%@d\n",@wts_sec, @avgtime_awrite);
-	printa("PUTVAL '$HOSTNAME'.nfs/clients/nfsv%s/%s/commit_latency %@d:%@d\n",@wts_sec, @avgtime_commit);
+	printa("PUTVAL '$HOSTNAME'.nfs.clients.nfsv%s/%s/gauge-nfsops %@d:%@d\n",@wts_sec, @c_nfsops);
+	printa("PUTVAL '$HOSTNAME'.nfs.clients.nfsv%s/%s/gauge-reads %@d:%@d\n",@wts_sec, @c_read_client);
+	printa("PUTVAL '$HOSTNAME'.nfs.clients.nfsv%s/%s/gauge-swrites %@d:%@d\n",@wts_sec, @c_swrite_client);
+	printa("PUTVAL '$HOSTNAME'.nfs.clients.nfsv%s/%s/gauge-awrites %@d:%@d\n",@wts_sec, @c_awrite_client);
+	printa("PUTVAL '$HOSTNAME'.nfs.clients.nfsv%s/%s/gauge-commits %@d:%@d\n",@wts_sec, @c_commit_client);
+	printa("PUTVAL '$HOSTNAME'.nfs.clients.nfsv%s/%s/gauge-read_bytes %@d:%@d\n",@wts_sec, @read_b);
+	printa("PUTVAL '$HOSTNAME'.nfs.clients.nfsv%s/%s/gauge-swrite_bytes %@d:%@d\n",@wts_sec, @swrite_b);
+	printa("PUTVAL '$HOSTNAME'.nfs.clients.nfsv%s/%s/gauge-awrite_bytes %@d:%@d\n",@wts_sec, @awrite_b);
+	printa("PUTVAL '$HOSTNAME'.nfs.clients.nfsv%s/%s/gauge-read_latency %@d:%@d\n",@wts_sec, @avgtime_read);
+	printa("PUTVAL '$HOSTNAME'.nfs.clients.nfsv%s/%s/gauge-swrite_latency %@d:%@d\n",@wts_sec, @avgtime_swrite);
+	printa("PUTVAL '$HOSTNAME'.nfs.clients.nfsv%s/%s/gauge-awrite_latency %@d:%@d\n",@wts_sec, @avgtime_awrite);
+	printa("PUTVAL '$HOSTNAME'.nfs.clients.nfsv%s/%s/gauge-commit_latency %@d:%@d\n",@wts_sec, @avgtime_commit);
 
 	/* clear data */
 	trunc(@c_nfsops); trunc(@c_read_client); trunc(@c_swrite_client); 

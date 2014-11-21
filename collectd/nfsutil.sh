@@ -17,9 +17,9 @@ tick-10sec
 {
 	@wts_sec = max(walltimestamp / 1000000000);
 
-        printa("PUTVAL '$HOSTNAME'.nfs/maxpending %@d:%@d\n", @wts_sec, @pending_reqs);
-        printa("PUTVAL '$HOSTNAME'.nfs/maxactive %@d:%@d\n", @wts_sec, @act_threads);
-        printa("PUTVAL '$HOSTNAME'.nfs/pct_util %@d:%@d\n", @wts_sec,@pool_pct_util);
+        printa("PUTVAL '$HOSTNAME'.nfs/req/gauge-maxpending %@d:%@d\n", @wts_sec, @pending_reqs);
+        printa("PUTVAL '$HOSTNAME'.nfs/req/gauge-maxactive %@d:%@d\n", @wts_sec, @act_threads);
+        printa("PUTVAL '$HOSTNAME'.nfs/req/gauge-pct_util %@d:%@d\n", @wts_sec,@pool_pct_util);
 
         trunc(@pending_reqs); 
         trunc(@act_threads); 

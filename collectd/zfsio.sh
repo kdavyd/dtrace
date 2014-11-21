@@ -1,6 +1,18 @@
 #!/usr/bin/bash
 
-export HOSTNAME=`hostname`
+if [ -z "$1" ]
+  then
+    export HOSTNAME=`hostname`
+  else
+    export HOSTNAME=$1
+fi
+
+if [ -z "$2"] ]
+  then
+    export INTERVAL=10
+  else
+    export INTERVAL=$2
+fi
 
 /usr/sbin/dtrace -Cn '
 
@@ -42,12 +54,12 @@ dmu_buf_hold_array_by_dnode:entry
 
 tick-10sec,END
 {
-        printa("PUTVAL '$HOSTNAME'.zfs/%s/reads %@d:%@d\n", @wts_sec, @ior);
-        printa("PUTVAL '$HOSTNAME'.zfs/%s/writes %@d:%@d\n", @wts_sec, @iow);
-        printa("PUTVAL '$HOSTNAME'.zfs/%s/r_bytes %@d:%@d\n", @wts_sec, @tpr);
-        printa("PUTVAL '$HOSTNAME'.zfs/%s/w_bytes %@d:%@d\n", @wts_sec, @tpw);
-        printa("PUTVAL '$HOSTNAME'.zfs/%s/r_bs %@d:%@d\n", @wts_sec, @bsr);
-        printa("PUTVAL '$HOSTNAME'.zfs/%s/w_bs %@d:%@d\n", @wts_sec, @bsw);
+        printa("PUTVAL '$HOSTNAME'.zfs.%s/gauge-reads %@d:%@d\n", @wts_sec, @ior);
+        printa("PUTVAL '$HOSTNAME'.zfs.%s/gauge-writes %@d:%@d\n", @wts_sec, @iow);
+        printa("PUTVAL '$HOSTNAME'.zfs.%s/gauge-r_bytes %@d:%@d\n", @wts_sec, @tpr);
+        printa("PUTVAL '$HOSTNAME'.zfs.%s/gauge-w_bytes %@d:%@d\n", @wts_sec, @tpw);
+        printa("PUTVAL '$HOSTNAME'.zfs.%s/gauge-r_bs %@d:%@d\n", @wts_sec, @bsr);
+        printa("PUTVAL '$HOSTNAME'.zfs.%s/gauge-w_bs %@d:%@d\n", @wts_sec, @bsw);
 
 
 
