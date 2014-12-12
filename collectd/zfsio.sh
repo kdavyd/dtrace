@@ -52,7 +52,7 @@ dmu_buf_hold_array_by_dnode:entry
         @distw[strjoin(this->path, " Writes")] = quantize(args[2]);
 }
 
-tick-10sec,END
+tick-'$INTERVAL'sec,END
 {
         printa("PUTVAL '$HOSTNAME'.zfs.%s/gauge-reads %@d:%@d\n", @wts_sec, @ior);
         printa("PUTVAL '$HOSTNAME'.zfs.%s/gauge-writes %@d:%@d\n", @wts_sec, @iow);

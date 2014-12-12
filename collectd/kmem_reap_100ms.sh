@@ -1,6 +1,11 @@
 #!/usr/bin/bash
 
-export HOSTNAME=`hostname`
+if [ -z "$1" ]
+  then
+    export HOSTNAME=`hostname`
+  else
+    export HOSTNAME=$1
+fi
 
 /usr/sbin/dtrace -Cn '
 

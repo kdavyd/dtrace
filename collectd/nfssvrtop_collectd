@@ -59,7 +59,8 @@
 #
 
 PATH=/usr/sbin:/usr/bin
-export HOSTNAME=`hostname`
+
+
 ##############################
 # check to see if the NFS server module is loaded
 # if not, then the dtrace probes will fail ungracefully
@@ -122,6 +123,14 @@ done
 shift $(($OPTIND - 1))
 
 ### option logic
+
+if [ ! -z "$1" ]
+  then
+    export HOSTNAME=$1; shift
+  else
+    export HOSTNAME=`!hostname`; shift
+fi
+
 if [ ! -z "$1" ]; then
         interval=$1; shift
 fi

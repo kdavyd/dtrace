@@ -1,6 +1,18 @@
 #!/usr/bin/bash
 
-export HOSTNAME=`hostname`
+if [ -z "$1" ]
+  then
+    export HOSTNAME=`hostname`
+  else
+    export HOSTNAME=$1
+fi
+
+if [ -z "$2"] ]
+  then
+    export INTERVAL=10
+  else
+    export INTERVAL=$2
+fi
 
 /usr/sbin/dtrace -Cn '
 
@@ -13,7 +25,7 @@ svc_xprt_qput:entry
         @pool_pct_util = max(100 * (args[0]->p_threads - args[0]->p_asleep) / args[0]->p_maxthreads);
 }
 
-tick-10sec
+tick-'$INTERVAL'sec
 {
 	@wts_sec = max(walltimestamp / 1000000000);
 
