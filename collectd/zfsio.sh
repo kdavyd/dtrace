@@ -23,15 +23,35 @@ fi
  * which dataset is causing the most I/O load on the current system. It should 
  * only be used for comparative analysis. */
 /* Author: Kirill.Davydychev@Nexenta.com */
-/* Copyright 2012, Nexenta Systems, Inc. All rights reserved. */
-/* Version: 0.4b */
+/* Copyright 2012, 2014 Nexenta Systems, Inc. All rights reserved. */
+/* Version: 0.5b */
 
 dmu_buf_hold_array_by_dnode:entry
 /args[0]->dn_objset->os_dsl_dataset && args[3]/ /* Reads */
 {
-        this->ds = stringof(args[0]->dn_objset->os_dsl_dataset->ds_dir->dd_myname);
-        this->parent = stringof(args[0]->dn_objset->os_dsl_dataset->ds_dir->dd_parent->dd_myname);
-        this->path = strjoin(strjoin(this->parent,"/"),this->ds); /* Dirty hack - parent/this format doesnt guarantee full path */
+        this->d = args[0]->dn_objset->os_dsl_dataset->ds_dir;
+        this->path = stringof(this->d->dd_myname);
+        this->p = this->d->dd_parent;
+        this->path = (this->p != NULL) ? strjoin(stringof(this->p->dd_myname),strjoin(".",this->path)):this->path;
+        this->p =  (this->p != NULL) ? this->p->dd_parent : NULL;
+        this->path = (this->p != NULL) ? strjoin(stringof(this->p->dd_myname),strjoin(".",this->path)):this->path;
+        this->p =  (this->p != NULL) ? this->p->dd_parent : NULL;
+        this->path = (this->p != NULL) ? strjoin(stringof(this->p->dd_myname),strjoin(".",this->path)):this->path;
+        this->p =  (this->p != NULL) ? this->p->dd_parent : NULL;
+        this->path = (this->p != NULL) ? strjoin(stringof(this->p->dd_myname),strjoin(".",this->path)):this->path;
+        this->p =  (this->p != NULL) ? this->p->dd_parent : NULL;
+        this->path = (this->p != NULL) ? strjoin(stringof(this->p->dd_myname),strjoin(".",this->path)):this->path;
+        this->p =  (this->p != NULL) ? this->p->dd_parent : NULL;
+        this->path = (this->p != NULL) ? strjoin(stringof(this->p->dd_myname),strjoin(".",this->path)):this->path;
+        this->p =  (this->p != NULL) ? this->p->dd_parent : NULL;
+        this->path = (this->p != NULL) ? strjoin(stringof(this->p->dd_myname),strjoin(".",this->path)):this->path;
+        this->p =  (this->p != NULL) ? this->p->dd_parent : NULL;
+        this->path = (this->p != NULL) ? strjoin(stringof(this->p->dd_myname),strjoin(".",this->path)):this->path;
+        this->p =  (this->p != NULL) ? this->p->dd_parent : NULL;
+        this->path = (this->p != NULL) ? strjoin(stringof(this->p->dd_myname),strjoin(".",this->path)):this->path;
+        this->p =  (this->p != NULL) ? this->p->dd_parent : NULL;
+        this->path = (this->p != NULL) ? strjoin(stringof(this->p->dd_myname),strjoin(".",this->path)):this->path;
+
         @ior[this->path] = count();
         @tpr[this->path] = sum(args[2]);
         @bsr[this->path] = avg(args[2]);
@@ -42,9 +62,29 @@ dmu_buf_hold_array_by_dnode:entry
 dmu_buf_hold_array_by_dnode:entry
 /args[0]->dn_objset->os_dsl_dataset && !args[3]/ /* Writes */
 {
-        this->ds = stringof(args[0]->dn_objset->os_dsl_dataset->ds_dir->dd_myname);
-        this->parent = stringof(args[0]->dn_objset->os_dsl_dataset->ds_dir->dd_parent->dd_myname);
-        this->path = strjoin(strjoin(this->parent,"/"),this->ds);
+        this->d = args[0]->dn_objset->os_dsl_dataset->ds_dir;
+        this->path = stringof(this->d->dd_myname);
+        this->p = this->d->dd_parent;
+        this->path = (this->p != NULL) ? strjoin(stringof(this->p->dd_myname),strjoin(".",this->path)):this->path;
+        this->p =  (this->p != NULL) ? this->p->dd_parent : NULL;
+        this->path = (this->p != NULL) ? strjoin(stringof(this->p->dd_myname),strjoin(".",this->path)):this->path;
+        this->p =  (this->p != NULL) ? this->p->dd_parent : NULL;
+        this->path = (this->p != NULL) ? strjoin(stringof(this->p->dd_myname),strjoin(".",this->path)):this->path;
+        this->p =  (this->p != NULL) ? this->p->dd_parent : NULL;
+        this->path = (this->p != NULL) ? strjoin(stringof(this->p->dd_myname),strjoin(".",this->path)):this->path;
+        this->p =  (this->p != NULL) ? this->p->dd_parent : NULL;
+        this->path = (this->p != NULL) ? strjoin(stringof(this->p->dd_myname),strjoin(".",this->path)):this->path;
+        this->p =  (this->p != NULL) ? this->p->dd_parent : NULL;
+        this->path = (this->p != NULL) ? strjoin(stringof(this->p->dd_myname),strjoin(".",this->path)):this->path;
+        this->p =  (this->p != NULL) ? this->p->dd_parent : NULL;
+        this->path = (this->p != NULL) ? strjoin(stringof(this->p->dd_myname),strjoin(".",this->path)):this->path;
+        this->p =  (this->p != NULL) ? this->p->dd_parent : NULL;
+        this->path = (this->p != NULL) ? strjoin(stringof(this->p->dd_myname),strjoin(".",this->path)):this->path;
+        this->p =  (this->p != NULL) ? this->p->dd_parent : NULL;
+        this->path = (this->p != NULL) ? strjoin(stringof(this->p->dd_myname),strjoin(".",this->path)):this->path;
+        this->p =  (this->p != NULL) ? this->p->dd_parent : NULL;
+        this->path = (this->p != NULL) ? strjoin(stringof(this->p->dd_myname),strjoin(".",this->path)):this->path;
+
         @iow[this->path] = count();
         @tpw[this->path] = sum(args[2]);
         @bsw[this->path] = avg(args[2]);
