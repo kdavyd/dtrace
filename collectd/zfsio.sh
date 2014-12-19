@@ -7,7 +7,7 @@ if [ -z "$1" ]
     export HOSTNAME=$1
 fi
 
-if [ -z "$2"]
+if [ -z "$2" ]
   then
     export INTERVAL=10
   else
@@ -32,7 +32,7 @@ dmu_buf_hold_array_by_dnode:entry
         this->d = args[0]->dn_objset->os_dsl_dataset->ds_dir;
         this->path = stringof(this->d->dd_myname);
         this->p = this->d->dd_parent;
-        this->path = (this->p != NULL) ? strjoin(stringof(this->p->dd_myname),strjoin(".",this->path)):this->path;
+        this->path = (this->p != NULL) ? strjoin(stringof(this->p->dd_myname),strjoin("/",this->path)):this->path;
         this->p =  (this->p != NULL) ? this->p->dd_parent : NULL;
         this->path = (this->p != NULL) ? strjoin(stringof(this->p->dd_myname),strjoin(".",this->path)):this->path;
         this->p =  (this->p != NULL) ? this->p->dd_parent : NULL;
@@ -65,7 +65,7 @@ dmu_buf_hold_array_by_dnode:entry
         this->d = args[0]->dn_objset->os_dsl_dataset->ds_dir;
         this->path = stringof(this->d->dd_myname);
         this->p = this->d->dd_parent;
-        this->path = (this->p != NULL) ? strjoin(stringof(this->p->dd_myname),strjoin(".",this->path)):this->path;
+        this->path = (this->p != NULL) ? strjoin(stringof(this->p->dd_myname),strjoin("/",this->path)):this->path;
         this->p =  (this->p != NULL) ? this->p->dd_parent : NULL;
         this->path = (this->p != NULL) ? strjoin(stringof(this->p->dd_myname),strjoin(".",this->path)):this->path;
         this->p =  (this->p != NULL) ? this->p->dd_parent : NULL;

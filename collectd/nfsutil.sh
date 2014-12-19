@@ -7,7 +7,7 @@ if [ -z "$1" ]
     export HOSTNAME=$1
 fi
 
-if [ -z "$2"] 
+if [ -z "$2" ] 
   then
     export INTERVAL=10
   else
