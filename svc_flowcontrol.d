@@ -27,10 +27,17 @@ fbt:rpcmod:svc_flowcontrol:entry
 }
 
 fbt:rpcmod:svc_flowcontrol:return
-/self->xprt->xp_full/
+/self->in && self->xprt->xp_full/
 {
         self->in = 0;
         @thr = count();
+        self->xprt = NULL;
+}
+
+fbt:rpcmod:svc_flowcontrol:return
+/self->in && !self->xprt->xp_full/
+{
+        self->in = 0;
         self->xprt = NULL;
 }
 
