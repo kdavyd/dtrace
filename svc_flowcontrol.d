@@ -10,7 +10,7 @@
 dtrace:::BEGIN
 /`svc_flowcontrol_disable == 1/
 {
-        trace("NFS flow control is disabled, exiting.");
+        trace("NFS flow control is disabled on this system, no point in tracing. Exiting.");
         exit(0);
 }
 
