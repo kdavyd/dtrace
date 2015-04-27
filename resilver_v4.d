@@ -22,7 +22,7 @@ dtrace:::BEGIN
 zio_read:entry
 /args[7] == 4/
 /*
-   Priority 10 reads indicate ZIO_PRIORITY_RESILVER
+   Priority 4 reads indicate ZIO_PRIORITY_RESILVER/SCRUB
    This might change in the future, but for now it
    looks like a safe way to detect only resilver IO.
 */
@@ -34,7 +34,7 @@ zio_read:entry
 
 dsl_scan_scrub_cb:entry
 / args[0]->dp_scan->scn_phys.scn_func == 2 /
-/* Scan function 2 is POOL_SCAN_RESILVER
+/* Scan function 2 is POOL_SCAN_RESILVER.
    The only reason we're tracing here is
    to determine throttling factor.
 */
