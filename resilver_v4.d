@@ -10,8 +10,8 @@
  * to read from all other devices in the same vdev.
  */
 /* Author: Kirill.Davydychev@Nexenta.com */
-/* Copyright 2012, Nexenta Systems, Inc. All rights reserved. */
-/* Version: 0.1b */
+/* Copyright 2012-2015, Nexenta Systems, Inc. All rights reserved. */
+/* Version: 0.2b-NS4 */
 
 dtrace:::BEGIN
 {
